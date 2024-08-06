@@ -82,6 +82,28 @@ export const modelData: ModelData = {
       id: "b2ddc694-dda9-4886-b357-37a6862b5b00",
     },
   },
+  Population: {
+    dataset:
+      "https://storage.autogon.ai/9f0bd8ef-5c99-493a-837e-1234a3d6d55a.csv",
+    form: [],
+    formDefault: {},
+    detail: {
+      function_code: "AUTO_R_2",
+      model_name: "population rate",
+      id: "dd3018de-3581-4543-8fb4-bad93e105af5",
+    },
+  },
+  PowerOutage: {
+    dataset:
+      "https://storage.autogon.ai/a61ae26f-8f75-4ed6-bfe4-d0f686de84f2.csv",
+    form: [],
+    formDefault: {},
+    detail: {
+      function_code: "AUTO_R_2",
+      model_name: "power-outage",
+      id: "dd3018de-3581-4543-8fb4-bad93e105af5",
+    },
+  },
   "Life Expectancy (both)": {
     dataset:
       "https://storage.autogon.ai/55410955-5f29-4766-a21b-08659ce1a0a2.csv", //https://storage.autogon.ai/7bee0b91-08ae-4f50-8b70-96137b2f3cc3.csv
