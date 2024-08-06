@@ -13,6 +13,7 @@ type Data = {
 };
 
 type ModelData = Record<string, Data>
+const arrayOfCountry = country.map(item => item.name)
 
 export const modelData: ModelData = {
   Education: {
@@ -98,7 +99,13 @@ export const modelData: ModelData = {
         name: "region",
         label: "Region/Country/Area",
         placeholder: "Select region",
-        options: ["Total, all countries or areas", "Africa"].map((item) => ({
+        options: [
+          "Total, all countries or areas",
+          "Africa",
+          "Northern Africa",
+          "Southern Africa",
+          ...arrayOfCountry,
+        ].map((item) => ({
           label: item,
           value: item,
         })),
@@ -184,7 +191,11 @@ export const modelData: ModelData = {
         name: "region",
         label: "Region/Country/Area",
         placeholder: "Select region",
-        options: ["Total, all countries or areas", "Africa"].map((item) => ({
+        options: [
+          "Total, all countries or areas",
+          "Africa",
+          ...arrayOfCountry,
+        ].map((item) => ({
           label: item,
           value: item,
         })),
