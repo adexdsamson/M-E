@@ -58,7 +58,7 @@ export const Login = () => {
   const ref = useRef<FormPropsRef | null>(null);
   const defaultValue = modelData[activeModel].formDefault;
 
-  const { ForgeForm, reset, setValue, unregister } = useForge({
+  const { ForgeForm, setValue, unregister } = useForge({
     fieldProps: modelData[activeModel].form,
     // shouldUnregister: true,
     // resetOptions: {
