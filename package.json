@@ -37,6 +37,7 @@
     "react-hook-form": "^7.52.1",
     "react-icons": "^5.2.1",
     "react-router-dom": "^6.24.1",
+    "rxjs": "^7.8.1",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "usehooks-ts": "^3.1.0",
