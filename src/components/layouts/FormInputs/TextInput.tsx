@@ -30,7 +30,7 @@ export const TextInput = (props: TextInputProps) => {
       <Label className="flex flex-col justify-center text-sm whitespace-nowrap text-stone-900">
         {props.label}
       </Label>
-      <div className="flex items-center bg-white rounded-lg border border-solid border-stone-300 py-1 mt-2 px-3 gap-1">
+      <div className="flex items-center bg-white rounded-lg border border-solid border-stone-300 mt-2 px-2 gap-1">
         <span>{props.startAdornment}</span>
         <Input
           {...props}

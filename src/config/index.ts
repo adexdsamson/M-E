@@ -1,4 +1,3 @@
 export const config = {
-  baseUrl: "",
-  
-}
+  baseUrl: "https://api.autogon.ai/api/v1/",
+};

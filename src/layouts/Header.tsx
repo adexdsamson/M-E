@@ -122,7 +122,7 @@ export function DropdownMenuDemo() {
           <div className=" flex cursor-pointer gap-2 items-center">
             {!matches ? null : (
               <div>
-                <p className="text-sm text-primary text-center">{`${user?.first_name} ${user?.last_name}`}</p>
+                <p className="text-sm text-primary text-center">{`${user?.first_name ?? "John"} ${user?.last_name ?? "Doe"}`}</p>
                 <p className="text-xs text-center text-[#5D0003] ">admin</p>
               </div>
             )}
