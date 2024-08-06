@@ -85,8 +85,49 @@ export const modelData: ModelData = {
   Population: {
     dataset:
       "https://storage.autogon.ai/9f0bd8ef-5c99-493a-837e-1234a3d6d55a.csv",
-    form: [],
-    formDefault: {},
+    form: [
+      {
+        name: "growthIndicator",
+        label: "Population growth and indicators of fertility and mortality",
+        component: TextInput,
+        type: "number",
+        containerClass: "mb-3",
+        // placeholder: "Enter dependents",
+      },
+      {
+        name: "region",
+        label: "Region/Country/Area",
+        placeholder: "Select region",
+        options: ["Total, all countries or areas", "Africa"].map((item) => ({
+          label: item,
+          value: item,
+        })),
+        component: TextSelect,
+        containerClass: "mb-3",
+      },
+      {
+        name: "year",
+        label: "Year",
+        component: TextInput,
+        // type: "ty",
+        containerClass: "mb-3",
+        // placeholder: "Enter dependents",
+      },
+      {
+        name: "series",
+        label: "Series",
+        component: TextInput,
+        disabled: true,
+        containerClass: "mb-3",
+        // placeholder: "Enter dependents",
+      },
+    ],
+    formDefault: {
+      growthIndicator: "",
+      region: "",
+      year: "",
+      series: "Population annual rate of increase (percent)",
+    },
     detail: {
       function_code: "AUTO_R_2",
       model_name: "population rate",
@@ -96,12 +137,35 @@ export const modelData: ModelData = {
   PowerOutage: {
     dataset:
       "https://storage.autogon.ai/a61ae26f-8f75-4ed6-bfe4-d0f686de84f2.csv",
-    form: [],
-    formDefault: {},
+    form: [
+      {
+        name: "country",
+        label: "Country",
+        placeholder: "Select region",
+        options: country.map((item) => ({
+          label: item.name,
+          value: item.name,
+        })),
+        component: TextSelect,
+        containerClass: "mb-3",
+      },
+      {
+        name: "year",
+        label: "Year",
+        component: TextInput,
+        // type: "ty",
+        containerClass: "mb-3",
+        // placeholder: "Enter dependents",
+      },
+    ],
+    formDefault: {
+      country: "",
+      year: "",
+    },
     detail: {
       function_code: "AUTO_R_2",
       model_name: "power-outage",
-      id: "dd3018de-3581-4543-8fb4-bad93e105af5",
+      id: "c37de9b0-0e7e-437b-a158-25e3726c9611",
     },
   },
   "Life Expectancy (both)": {

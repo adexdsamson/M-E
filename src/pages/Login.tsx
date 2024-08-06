@@ -35,6 +35,7 @@ import { ApiResponse, ApiResponseError } from "@/types";
 import { modelData } from "@/model";
 import { useToastHandlers } from "@/hooks/useToaster";
 import { useCsvData } from "@/hooks/useCsvData";
+import Spinner from "@/components/ui/Spinner";
 
 type VisualsResponse = {
   plots: string[];
@@ -57,7 +58,7 @@ export const Login = () => {
   const ref = useRef<FormPropsRef | null>(null);
   const defaultValue = modelData[activeModel].formDefault;
 
-  const { ForgeForm, reset, setValue } = useForge({
+  const { ForgeForm, reset, setValue, unregister } = useForge({
     fieldProps: modelData[activeModel].form,
     // shouldUnregister: true,
     // resetOptions: {
@@ -74,7 +75,7 @@ export const Login = () => {
   const [message, setMessage] = useState<string | null>(null);
   const toastHandlers = useToastHandlers();
 
-  const { data } = useQuery<
+  const { data, isLoading } = useQuery<
     ApiResponse<VisualsResponse>,
     ApiResponseError
   >({
@@ -97,8 +98,6 @@ export const Login = () => {
   });
 
   const handleSubmit = async (payload: any) => {
-    console.log("pay", payload);
-
     try {
       let res = await convertToCsvMutation.mutateAsync({
         args: {
@@ -168,25 +167,22 @@ export const Login = () => {
               )}% `
           );
           break;
-        case "loanDefault":
+        case "Life Expectancy (both)":
           setMessage(
             () =>
-              messages[activeModel as "loanDefault"][
-                csv?.data?.[0]?.prediction_label as "0" | "1"
-              ]
+              `The life expectancy for both gender in year ${payload.year} will be ${csv?.data?.[0]?.prediction_label}`
           );
           break;
-        case "customerLifeTimeValue":
+        case "Population":
           setMessage(
             () =>
-              `${messages[activeModel as "customerLifeTimeValue"]} ${
-                csv?.data?.[0]?.prediction_label
-              }`
+              `The population annual growth will increase by ${csv?.data?.[0]?.prediction_label} in year ${payload?.year}`
           );
           break;
-        case "fraudDetection":
+        case "PowerOutage":
           setMessage(
-            () => `This is a ${csv?.data?.[0]?.prediction_label} fraud`
+            () =>
+              `This is the number of firms that will experience power outage ${csv?.data?.[0]?.prediction_label} in year ${payload.year}`
           );
           break;
         case "projectedRevenue":
@@ -227,6 +223,12 @@ export const Login = () => {
     }
   }, [defaultValue, activeModel]);
 
+  const onReset = () => {
+    unregister(
+      Object.keys(modelData[activeModel].formDefault).map((item) => item)
+    );
+  };
+
   return (
     <Container noGutter className="w-full overflow-auto">
       <Header
@@ -240,24 +242,40 @@ export const Login = () => {
         <h4 className="text-2xl mb-4">Monitor And Evaluation</h4>
         <Menubar className="w-fit">
           <MenubarMenu>
-            <MenubarTrigger>Select Models</MenubarTrigger>
+            <MenubarTrigger>Select Models: {activeModel} </MenubarTrigger>
             <MenubarContent>
-              <MenubarItem onSelect={() => {
-                setActiveModel("Education")
-                setMessage(null);
-                reset(defaultValue, {
-                  keepDefaultValues: false,
-                  keepValues: false,
-                  keepDirtyValues: false,
-                  keepErrors: false,
-                  keepDirty: false,
-                });
-              }}>
+              <MenubarItem
+                onSelect={() => {
+                  onReset();
+                  setActiveModel("Education");
+                  setMessage(null);
+                }}
+              >
                 Education Literacy
               </MenubarItem>
-              <MenubarSeparator />
-              <MenubarItem onSelect={() => setActiveModel("Maternal")}>
+              {/* <MenubarSeparator /> */}
+              {/* <MenubarItem onSelect={() => setActiveModel("Maternal")}>
                 Maternal mortality ratio
+              </MenubarItem> */}
+              <MenubarSeparator />
+              <MenubarItem
+                onSelect={() => {
+                  onReset();
+                  setActiveModel("Population");
+                  setMessage(null);
+                }}
+              >
+                Population Rate
+              </MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem
+                onSelect={() => {
+                  onReset();
+                  setActiveModel("PowerOutage");
+                  setMessage(null);
+                }}
+              >
+                Power Outage
               </MenubarItem>
               <MenubarSeparator />
               <MenubarSub>
@@ -265,15 +283,9 @@ export const Login = () => {
                 <MenubarSubContent>
                   <MenubarItem
                     onSelect={() => {
+                      onReset();
                       setActiveModel("Life Expectancy (both)");
-                      setMessage(null)
-                      reset(defaultValue, {
-                        keepDefaultValues: false,
-                        keepValues: false,
-                        keepDirtyValues: false,
-                        keepErrors: false,
-                        keepDirty: false,
-                      });
+                      setMessage(null);
                     }}
                   >
                     Both Sex
@@ -320,6 +332,10 @@ export const Login = () => {
                     })}
                   </SelectContent>
                 </Select>
+
+                <div className="mx-auto w-fit">
+                  {isLoading && <Spinner size={50} />}
+                </div>
 
                 {data?.data.plots
                   .filter(
